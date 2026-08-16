@@ -16,7 +16,7 @@ This diagram maps out how an employee's time-off request is processed. It starts
 
 This is a standard checkout process for an online store. After the customer places an order, the system checks the inventory. If the item is out of stock, the customer is alerted and the process terminates. Otherwise, it tries to process the payment. A failed payment stops everything and notifies the customer. A successful payment means the order gets confirmed, prepped, and shipped out, ending with a tracking/shipping confirmation.
 
-
+<img width="3390" height="726" alt="Scenario2_Online_Purchase_Order_Processing" src="https://github.com/user-attachments/assets/8815625a-dc01-43c2-b32c-de45d56d286f" />
 This model shows what happens when a customer places an order online. First, the system checks if the product is actually in stock. If it's out of stock, it notifies the customer and ends. If the product is available, it moves on to process the payment. If the payment fails, the customer gets an error notification and the process stops. If the payment is successful, the order is confirmed, prepared for shipment, and finally shipped out, ending with a shipping confirmation email to the customer.
 
 
