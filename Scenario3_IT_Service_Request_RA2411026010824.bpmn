@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Employee submits IT request">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_Register" name="Help desk registers request">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_CheckSev" name="Help desk checks problem severity">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_Sev" name="Severity level?">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_Sev_Low</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Sev_High</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_AssignLow" name="Assign to support technician">
+      <bpmn:incoming>Flow_Sev_Low</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_AssignHigh" name="Assign to senior technician">
+      <bpmn:incoming>Flow_Sev_High</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_Investigate" name="Technician investigates problem">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_Resolve" name="Can be resolved internally?">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_Res_Yes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Res_No</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_Fix" name="Technician fixes the problem">
+      <bpmn:incoming>Flow_Res_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_Escalate" name="Escalate to external service provider">
+      <bpmn:incoming>Flow_Res_No</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_Update" name="Help desk updates request status">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_Notify" name="Employee receives resolution notification">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_End1">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Activity_Register" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Activity_Register" targetRef="Activity_CheckSev" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Activity_CheckSev" targetRef="Gateway_Sev" />
+    <bpmn:sequenceFlow id="Flow_Sev_Low" name="Low" sourceRef="Gateway_Sev" targetRef="Activity_AssignLow" />
+    <bpmn:sequenceFlow id="Flow_Sev_High" name="High" sourceRef="Gateway_Sev" targetRef="Activity_AssignHigh" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Activity_AssignLow" targetRef="Activity_Investigate" />
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Activity_AssignHigh" targetRef="Activity_Investigate" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Activity_Investigate" targetRef="Gateway_Resolve" />
+    <bpmn:sequenceFlow id="Flow_Res_Yes" name="Yes" sourceRef="Gateway_Resolve" targetRef="Activity_Fix" />
+    <bpmn:sequenceFlow id="Flow_Res_No" name="No" sourceRef="Gateway_Resolve" targetRef="Activity_Escalate" />
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Activity_Fix" targetRef="Activity_Update" />
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Activity_Escalate" targetRef="Activity_Update" />
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="Activity_Update" targetRef="Activity_Notify" />
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="Activity_Notify" targetRef="Event_End1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_Register_di" bpmnElement="Activity_Register">
+        <dc:Bounds x="240" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_CheckSev_di" bpmnElement="Activity_CheckSev">
+        <dc:Bounds x="390" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Sev_di" bpmnElement="Gateway_Sev" isMarkerVisible="true">
+        <dc:Bounds x="540" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_AssignLow_di" bpmnElement="Activity_AssignLow">
+        <dc:Bounds x="640" y="30" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_AssignHigh_di" bpmnElement="Activity_AssignHigh">
+        <dc:Bounds x="640" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_Investigate_di" bpmnElement="Activity_Investigate">
+        <dc:Bounds x="790" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Resolve_di" bpmnElement="Gateway_Resolve" isMarkerVisible="true">
+        <dc:Bounds x="940" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_Fix_di" bpmnElement="Activity_Fix">
+        <dc:Bounds x="1040" y="30" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_Escalate_di" bpmnElement="Activity_Escalate">
+        <dc:Bounds x="1040" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_Update_di" bpmnElement="Activity_Update">
+        <dc:Bounds x="1190" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_Notify_di" bpmnElement="Activity_Notify">
+        <dc:Bounds x="1340" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_End1_di" bpmnElement="Event_End1">
+        <dc:Bounds x="1492" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="240" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="340" y="120" />
+        <di:waypoint x="390" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="490" y="120" />
+        <di:waypoint x="540" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Sev_Low_di" bpmnElement="Flow_Sev_Low">
+        <di:waypoint x="565" y="95" />
+        <di:waypoint x="565" y="70" />
+        <di:waypoint x="640" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Sev_High_di" bpmnElement="Flow_Sev_High">
+        <di:waypoint x="565" y="145" />
+        <di:waypoint x="565" y="190" />
+        <di:waypoint x="640" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="740" y="70" />
+        <di:waypoint x="765" y="70" />
+        <di:waypoint x="765" y="120" />
+        <di:waypoint x="790" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="740" y="190" />
+        <di:waypoint x="765" y="190" />
+        <di:waypoint x="765" y="120" />
+        <di:waypoint x="790" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="890" y="120" />
+        <di:waypoint x="940" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Res_Yes_di" bpmnElement="Flow_Res_Yes">
+        <di:waypoint x="965" y="95" />
+        <di:waypoint x="965" y="70" />
+        <di:waypoint x="1040" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Res_No_di" bpmnElement="Flow_Res_No">
+        <di:waypoint x="965" y="145" />
+        <di:waypoint x="965" y="190" />
+        <di:waypoint x="1040" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="1140" y="70" />
+        <di:waypoint x="1165" y="70" />
+        <di:waypoint x="1165" y="120" />
+        <di:waypoint x="1190" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="1140" y="190" />
+        <di:waypoint x="1165" y="190" />
+        <di:waypoint x="1165" y="120" />
+        <di:waypoint x="1190" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9">
+        <di:waypoint x="1290" y="120" />
+        <di:waypoint x="1340" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10">
+        <di:waypoint x="1440" y="120" />
+        <di:waypoint x="1492" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
