@@ -1,4 +1,4 @@
-<img width="3390" height="726" alt="Scenario2_Online_Purchase_Order_Processing" src="https://github.com/user-attachments/assets/13a6b9c1-4e5e-4bf4-8f22-6ba0c807e04e" /># Exercise 1 - BPMN Models
+# Exercise 1 - BPMN Models
 
 Vedika Choudhary
 
